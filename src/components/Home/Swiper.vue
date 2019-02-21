@@ -1,9 +1,10 @@
 <template>
-  <div calss="wrapper">
-    <swiper :options="swiperOption">
+  <div class="wrapper">
+    <swiper :options="swiperOption" v-if="showSwiper">
       <!-- slides -->
-      <swiper-slide>I'm Slide 1</swiper-slide>
-      <swiper-slide>I'm Slide 2</swiper-slide>
+      <swiper-slide v-for="item in list" :key="item.id">
+        <img class="swiper-img" :src="item.imgUrl" >
+      </swiper-slide>
       <!-- Optional controls -->
       <div class="swiper-pagination"  slot="pagination"></div>
     </swiper>
@@ -21,10 +22,21 @@ export default {
       },
     };
   },
+  props: {
+    list: Array,
+  },
+  computed: {
+    showSwiper() {
+      return this.list.length;
+    },
+  },
 };
 </script>
 
 <style lang="less" scoped>
+  .swiper-pagination /deep/ .swiper-pagination-bullet {
+    background: #fff;
+  };
   .wrapper {
     overflow:hidden;
     width: 100%;
