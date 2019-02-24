@@ -39,7 +39,6 @@ export default {
       axios
         .get('/mock/index.json')
         .then((res) => {
-          console.log(res.data);
           const info = res.data;
           if (info.ret === true) {
             this.city = info.data.city;
