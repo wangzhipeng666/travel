@@ -5,7 +5,7 @@
         <div class="title border-topbottom">当前城市</div>
         <div class="button-list">
           <div class="button-wrapper">
-            <div class="button">北京</div>
+            <div class="button">{{ this.currentCity }}</div>
           </div>
         </div>
       </div>
@@ -13,7 +13,11 @@
       <div class="area">
         <div class="title border-topbottom">热门城市</div>
         <div class="button-list">
-          <ul class="button-wrapper" v-for="item in hot" :key="item.id">
+          <ul class="button-wrapper"
+            v-for="item in hot"
+            :key="item.id"
+            @click="handleCityClick(item.name)"
+          >
             <li class="button">{{ item.name }}</li>
           </ul>
         </div>
@@ -22,7 +26,11 @@
       <div class="area" v-for="(value, key) of cities" :key="key" :ref="key">
         <div class="title border-topbottom">{{ key }}</div>
         <ul class="item-list">
-          <li class="item border-bottom" v-for="innerItem of value" :key="innerItem.id">
+          <li class="item border-bottom"
+            v-for="innerItem of value"
+            :key="innerItem.id"
+            @click="handleCityClick(innerItem.name)"
+          >
           {{ innerItem.name }}</li>
         </ul>
       </div>
@@ -33,6 +41,7 @@
 
 <script>
 import BScroll from 'better-scroll';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'CityList',
@@ -40,6 +49,19 @@ export default {
     cities: Object,
     hot: Array,
     letter: String,
+  },
+  methods: {
+    handleCityClick(city) {
+      // this.$store.commit('changeCity', city);
+      this.changeCity(city);
+      this.$router.push('/');
+    },
+    ...mapMutations(['changeCity']),
+  },
+  computed: {
+    ...mapState({
+      currentCity: 'city',
+    }),
   },
   mounted() {
     this.scroll = new BScroll(this.$refs.wrapper);
@@ -50,7 +72,6 @@ export default {
         const element = this.$refs[this.letter][0];
         this.scroll.scrollToElement(element);
       }
-      console.log(this.letter);
     },
   },
 };
