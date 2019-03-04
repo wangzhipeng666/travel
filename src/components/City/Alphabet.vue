@@ -19,9 +19,12 @@ export default {
   computed: {
     letters() {
       const letters = [];
-      for (let i in this.cities) {
+      // for (let i in this.cities) {
+      //   letters.push(i);
+      // }
+      this.cities.forEach((i) => {
         letters.push(i);
-      }
+      });
       return letters;
     },
   },

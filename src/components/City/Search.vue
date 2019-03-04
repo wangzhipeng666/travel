@@ -57,13 +57,13 @@ export default {
       }
       this.timer = setTimeout(() => {
         const result = [];
-        for (let i in this.cities) {
+        this.cities.forEach((i) => {
           this.cities[i].forEach((value) => {
             if (value.spell.indexOf(this.keyword) > -1 || value.name.indexOf(this.keyword) > -1) {
               result.push(value);
             }
           });
-        }
+        });
         this.list = result;
       }, 100);
     },
